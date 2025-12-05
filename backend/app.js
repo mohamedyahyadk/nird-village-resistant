@@ -17,18 +17,18 @@ app.use(passport.initialize());
 // Middleware
 app.use(
   cors({
-    origin: "https://nird-village-resistant-1.onrender.com", //  Frontend
+    origin: "*", //  Frontend
     credentials: true,
   })
 );
-app.use(bodyParser.json());
+// app.use(bodyParser.json());
 
 // Routes
 app.use("/auth", authRoutes);
 app.use("/api", secureRoutes);
-// app.get("/", (req, res) => {
-//   res.send("🚀 NIRD Backend Server is running!");
-// });
+app.get("/", (req, res) => {
+  res.send("🚀 NIRD Backend Server is running!");
+});
 
 // Start server
 app.listen(PORT, () => {
