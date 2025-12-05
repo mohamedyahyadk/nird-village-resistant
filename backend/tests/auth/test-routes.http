@@ -1,0 +1,40 @@
+### 1) Register new user
+POST http://localhost:5000/auth/register
+Content-Type: application/json
+
+{
+  "name": "Mohamed",
+  "email": "test1@example.com",
+  "password": "123456",
+  "role": "STUDENT"
+}
+
+### 2) Login (get JWT token)
+POST http://localhost:5000/auth/login
+Content-Type: application/json
+
+{
+  "email": "test1@example.com",
+  "password": "123456"
+}
+
+### Après la connexion, prenez le token depuis la réponse et placez-le ici ↓ ↓
+# Example:
+# @token = eyJhbGciOiJIUzI1NiIs...
+
+@token = {{"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcwOTk2MDRhLTI2MzktNDJiNi1hNDYyLWNjOWRmODJhMTMyOCIsInJvbGUiOiJTVFVERU5UIiwiaWF0IjoxNzY0OTMwNjIxLCJleHAiOjE3NjU1MzU0MjF9.jPJS8Mub2CNwx9Wffu5V_259NS1M5C4jiBqOSSC-aBc"}}
+
+### 3) Test protected route
+GET http://localhost:5000/api/profile
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcwOTk2MDRhLTI2MzktNDJiNi1hNDYyLWNjOWRmODJhMTMyOCIsInJvbGUiOiJTVFVERU5UIiwiaWF0IjoxNzY0OTMwNjIxLCJleHAiOjE3NjU1MzU0MjF9.jPJS8Mub2CNwx9Wffu5V_259NS1M5C4jiBqOSSC-aBc
+
+### 4) Test role-based access (ADMIN only)
+GET http://localhost:3000/api/admin-panel
+Authorization: Bearer {{token}}
+
+### 5) Test wrong token
+GET http://localhost:5000/api/profile
+Authorization: Bearer invalid_token_123
+
+### 6) Test missing token
+GET http://localhost:3000/api/profile
