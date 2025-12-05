@@ -15,7 +15,12 @@ require("./config/passport")(passport);
 app.use(passport.initialize());
 
 // Middleware
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://nird-village-resistant-1.onrender.com", //  Frontend
+    credentials: true,
+  })
+);
 app.use(bodyParser.json());
 
 // Routes
